@@ -26,11 +26,11 @@ def sql_create_table(con, tablename):
         return 1
     print(tablename)
     cur = con.cursor()
-    cmd = "CREATE TABLE IF NOT EXISTS {} (".format(tablename)
+    cmd = "CREATE TABLE IF NOT EXISTS '{}' (".format(tablename)
     cmd += " threads int NOT NULL)"
     cur.execute(cmd)
 
-    cmd = "insert INTO {} (threads) Values (1),(2),(4),(8),(12),(16),(24)".format(tablename)
+    cmd = "insert INTO '{}' (threads) Values (1),(2),(4),(8),(12),(16),(24)".format(tablename)
     cur.execute(cmd)
     con.commit()
     print("Sql: Table {} created".format(tablename))
@@ -44,7 +44,7 @@ def sql_create_table(con, tablename):
 
 def sql_print_table(con, tablename):
     cur = con.cursor()
-    cmd = "SELECT * from {}".format(tablename)
+    cmd = "SELECT * from '{}'".format(tablename)
     cur.execute(cmd)
     rows = cur.fetchall()
     for row in rows:
@@ -52,14 +52,14 @@ def sql_print_table(con, tablename):
 
 def sql_update_table(con, tablename, column, threadID, value):
     cur = con.cursor()
-    cmd = "UPDATE {} SET {} = {} WHERE threads = {}".format(tablename, column, value, threadID)
+    cmd = "UPDATE '{}' SET {} = {} WHERE threads = {}".format(tablename, column, value, threadID)
     print(cmd)
     cur.execute(cmd)
     con.commit()
 
 def sql_add_column(con, tablename, columnname):
     cur = con.cursor()
-    cmd = "ALTER TABLE {} ADD {} float".format(tablename, columnname)
+    cmd = "ALTER TABLE '{}' ADD {} float".format(tablename, columnname)
     print(cmd)
     cur.execute(cmd)
     con.commit()
